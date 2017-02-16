@@ -20,11 +20,11 @@
   3. Create and edit __init__.py file in fabfile 
 	   
        * For salt deployment copy and paste code localize in https://github.com/numericube/numericube.deploy/blob/master/examples/salt/__init__.py
-       * For ansible deployment copy and paste configuration variable localize in https://github.com/numericube/numericube.deploy/blob/master/examples/salt/vars.yaml
+       * For ansible deployment copy and paste configuration variable localize in https://github.com/numericube/numericube.deploy/blob/master/examples/ansible/__init__.py
 	
   4. Configure variable for your project
 
-       * For salt deployment you can take example in https://github.com/numericube/numericube.deploy/blob/master/examples/ansible/__init__.py
+       * For salt deployment you can take example in https://github.com/numericube/numericube.deploy/blob/master/examples/salt/vars.yaml
        * For ansible deployment copy and paste configuration variable localize in https://github.com/numericube/numericube.deploy/blob/master/examples/ansible/vars.yaml
 
 ## What provide numericube.deploy ?
