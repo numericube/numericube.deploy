@@ -16,7 +16,8 @@ CREDENTIALS_FILE: ".git_token"
 PROJECT_NAME: "myproject"
 # where the project is installed in remote dir
 PROJECT_REMOTE_DIR: "/opt/myproject/src"
-# where your version is store
+# where your project version is store
+# deploy release update this file according this configuration
 VERSION_FILE: "../provision/pillar/myproject/init.sls"
 # version key (in relation of your version file
 VERSION_KEY: 'project/deployed_branch'
