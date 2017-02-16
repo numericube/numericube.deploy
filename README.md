@@ -8,7 +8,7 @@
 
 ## Configure your project for numericube.deploy
 
-  1 . Create deploy key in your git repository
+  1. Create deploy key in your git repository
   
     For more information see : https://developer.github.com/guides/managing-deploy-keys/#deploy-keys
   
