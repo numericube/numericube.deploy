@@ -41,10 +41,6 @@ class AnsibleDeployment(base.BaseDeployment):
     salt_version_file = None
     remote_minion_target = None
     authorized_key = None
-    attributes = base.BaseDeployment.attributes + ('AUTHORIZED_KEY',
-                                                   'VERSION_FILE',
-                                                   'KEY_VERSION_FILE')
-
     
     def _bump_version(self, src_dir, git_release_tag, release_number):
         """Bump version in files, return the list of files about to be commited
