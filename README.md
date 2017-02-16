@@ -4,7 +4,7 @@
 
 ## Installation
 
- `pip install https://github.com/numericube/numericube.deploy/archive/master.zip`
+ `pip install https://github.com/numericube/numericube.deploy/archive/1.0.zip`
 
 ## Configure your project for numericube.deploy
 
