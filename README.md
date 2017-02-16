@@ -1,10 +1,19 @@
 # numericube.deploy
 
-Provide generic base class for deploying application (based on salt or ansible) with fabric.
+   Provide generic base class for deploying application (based on salt or ansible) with fabric.
 
 ## Installation
 
  `pip install https://github.com/numericube/numericube.deploy/archive/master.zip`
+
+## Configure your project for numericube.deploy
+
+  Create deploy key in your git repository
+  
+  For more information see : https://developer.github.com/guides/managing-deploy-keys/#deploy-keys
+  
+  We use this for deploying your application in remote host
+
 
 ## How to use numericube.deploy in your project
 
