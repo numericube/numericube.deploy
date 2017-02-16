@@ -1,0 +1,33 @@
+# where your repository is
+# github.com-myproject is recognize by ssh config (see bellow)
+GIT_REPOSITORY: "git@github.com-myproject:numericube/myproject.git"
+# location of private key for deployment (issue from deploy key of github)
+SSH_CONFIG: "../provision/ansible/roles/myproject/files/:opt:myproject:.ssh:config"
+SSH_KEY: "../provision/ansible/roles/myproject/files/:opt:myproject:.ssh:myproject_rsa"
+# Debug mod
+DEBUG: False
+# Location of git_token
+CREDENTIALS_FILE: ".git_token"
+# Project name
+PROJECT_NAME: "myproject"
+# where the project is installed in remote dir
+PROJECT_REMOTE_DIR: "/project-src"
+# deploy release update this file according this configuration
+VERSION_FILE: "../provision/ansible/roles/myproject/vars/main.yml"
+# version key in yaml
+KEY_VERSION_FILE: "myproject_version"
+# relative location of inventory file of ansible
+ANSIBLE_INVENTORY_FILE: "../provision/ansible/hosts "
+# relative location of playbook
+ANSIBLE_SITE: "../provision/ansible/site.yml"
+# location of public key for deployment
+AUTHORIZED_KEY: "../provision/ansible/roles/myproject/files/:opt:myproject:.ssh:myproject_rsa.pub"
+# user used in deployment
+USER: "myproject"
+# what install for bootstrap
+GENERIC_BOOTSTRAP:
+  apt:
+    - software-properties-common
+    - python-software-properties
+    - git
+    - curl
