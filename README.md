@@ -1,6 +1,6 @@
 # numericube.deploy
 
-Provide generic base class for deploying application with fabric.
+Provide generic base class for deploying application (based on salt or ansible) with fabric.
 
 ## Installation
 
