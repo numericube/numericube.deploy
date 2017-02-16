@@ -9,11 +9,11 @@ DEBUG: False
 # where we store token from git
 CREDENTIALS_FILE: ".git_token"
 # project name
-PROJECT_NAME: "monespace"
+PROJECT_NAME: "myproject"
 # where the project is installed in remote dir
-PROJECT_REMOTE_DIR: "/opt/monespace/src"
+PROJECT_REMOTE_DIR: "/opt/myproject/src"
 # where your version is store
-VERSION_FILE: "../provision/pillar/monespace/init.sls"
+VERSION_FILE: "../provision/pillar/myproject/init.sls"
 # version key (in relation of your version file
 VERSION_KEY: 'project/deployed_branch'
 # location of remote salt 
