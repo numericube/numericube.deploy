@@ -56,17 +56,6 @@ except ImportError:
     print "(sudo?) pip install github3.py"
     exit(-1)
 
-VARIABLES = ('GIT_REPOSITORY',
-             'DATA_DIR',
-             'SSH_CONFIG',
-             'SSH_KEY',
-             'DEBUG',
-             'CREDENTIALS_FILE',
-             'BOOSTRAP',
-             'PROJECT_NAME',
-             'PROJECT_REMOTE_DIR',
-             'COMMON_ANCESTOR_TAG',
-             )
 COMMAND_CURRENT_BRANCH = r"git branch | grep '*' | sed -e 's/\* //g'"
 COMMAND_CURRENT_TAG = r"git describe --exact-match --tags"
 
@@ -119,7 +108,6 @@ class BaseDeployment(object):
     common_ancestor_tag = None
     project_name = None
     # if you want add variable add to this
-    attributes = VARIABLES
 
     def __init__(self, local_dir, yaml_config_file):
         """ load configuration of project by yaml
@@ -692,7 +680,6 @@ class BaseDeployment(object):
     def update_issues(self, git_previous_tag=None, git_release_tag=None):
         """Update issues according to what we're doing now.
         """
-        if git_previous_tag is None:
         # Prepare text to put in the issues
         issue_comment = ("Tag %s deployed on"
                          "http://%s by %s") % (git_release_tag,

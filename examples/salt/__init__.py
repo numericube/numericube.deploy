@@ -20,16 +20,6 @@ class MySaltDeployment(SaltDeployment):
         return super(MySaltDeployment, self)\
             .__init__(HERE,
                       os.path.join(HERE,'vars.yaml'))
-
-    def bootstrap(self):
-        """ specific bootstrap for my project """
-        # check fqdn
-        self._bootstrap_fqdn()
-        # install essential ubuntu pkg for your project
-        # see GENERIC_BOOTSTRAP in vars
-        self._bootstrap_ubuntu_essential()
-        # install salt for your project
-        self._bootstrap_ubuntu_salt()
         
 deploy = MySaltDeployment()
 utils.add_class_methods_as_module_level_functions_for_fabric(deploy, __name__)

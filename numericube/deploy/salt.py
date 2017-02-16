@@ -39,8 +39,6 @@ class SaltDeployment(base.BaseDeployment):
 
     version_file = None
     remote_minion_target = None
-    attributes = base.BaseDeployment.attributes + ('VERSION_FILE',
-                                                   'REMOTE_MINION_TARGET')
 
     def _bump_version(self, src_dir, git_release_tag, release_number):
         """Bump version in files, return the list of files about to be commited
