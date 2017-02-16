@@ -8,24 +8,21 @@
 
 ## Configure your project for numericube.deploy
 
-  Create deploy key in your git repository
+  1 . Create deploy key in your git repository
   
-  For more information see : https://developer.github.com/guides/managing-deploy-keys/#deploy-keys
+    For more information see : https://developer.github.com/guides/managing-deploy-keys/#deploy-keys
   
-  We use this for deploying your application in remote host
+    We use this for deploying your application in remote host
 
-
-## How to use numericube.deploy in your project
-
-1. Create a fabfile directory in your repository
+  2. Create a fabfile directory in your repository
 	`mkdir fabfile`
 
-2. Create and edit __init__.py file in fabfile 
+  3. Create and edit __init__.py file in fabfile 
 	   
        * For salt deployment copy and paste code localize in examples/salt/__init__.py
        * For ansible deployment copy and paste configuration variable localize in examples/ansible/__init__.py
 	
-3. Configure variable for your project
+  4. Configure variable for your project
 
        * For salt deployment you can take example in  examples/salt/vars.yaml
        * For ansible deployment copy and paste configuration variable localize in examples/ansible/vars.yaml
