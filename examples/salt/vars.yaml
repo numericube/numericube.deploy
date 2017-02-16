@@ -1,4 +1,5 @@
-# where your repository is 
+# where your repository is
+# github.com-myproject is recognize by ssh config (see bellow)
 GIT_REPOSITORY: "git@github.com-myproject:organization/project.git"
 # location of private key for deployment (issue from deploy key of github)
 SSH_KEY: "../provision/salt/myproject/:opt:myproject:.ssh:myproject_rsa"
