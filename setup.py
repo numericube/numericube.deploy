@@ -30,7 +30,7 @@ setup(name='numericube.deploy',
           'pyyaml',
           'six',
           'packaging',
-          'cryptography'
+          
       ],
       entry_points="""
       # -*- Entry points: -*-

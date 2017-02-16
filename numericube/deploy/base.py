@@ -485,13 +485,29 @@ class BaseDeployment(object):
         """ Retrieve current tag number or the target machine """
         with cd(self.project_remote_dir):
             current_tag = sudo(COMMAND_CURRENT_TAG, warn_only=True,
-                               user='monespace')
+                               user=self.user)
         if 'git: command not found' in current_tag:
             print red("Git is not installed on %s" % env.host_string)
             current_tag = None
+            return current_tag
         if not re.compile('v[0-9]{8}').findall(current_tag):
             current_tag = None
-
+        if current_tag is None:
+            with cd(self.project_remote_dir):
+                current_tag = sudo(COMMAND_CURRENT_BRANCH, warn_only=True,
+                                   user=self.user)
+            if not re.compile('v[0-9]{8}').findall(current_tag):
+                return None
+            else:
+                print red("WARNING:"), "your remote repository ", \
+                    "is based on git branch ",yellow(current_tag), \
+                    " not a git tag"
+                print red("You are notice that deploy process switch "
+                          "now with a tag (not a branch)")
+                if not confirm("Do you aggree with that ?",
+                               default=True):
+                    abort("Ok. You can manually switch "
+                          "to a tag on remote server")
         # Return it
         return current_tag
 
@@ -676,6 +692,7 @@ class BaseDeployment(object):
     def update_issues(self, git_previous_tag=None, git_release_tag=None):
         """Update issues according to what we're doing now.
         """
+        if git_previous_tag is None:
         # Prepare text to put in the issues
         issue_comment = ("Tag %s deployed on"
                          "http://%s by %s") % (git_release_tag,

@@ -149,3 +149,12 @@ class SaltDeployment(base.BaseDeployment):
     def _provisioning(self):
         """ run provisioning """
         sudo("salt-call --local state.highstate")
+
+    def bootstrap(self):
+        """ bootstrap project """
+        self._bootstrap_fqdn()
+        self._bootstrap_ubuntu_essential()
+        self._bootstrap_ubuntu_salt()
+        sudo("mkdir -p %s" % self.remote_minion_target)
+        # Reset minion id
+        sudo("rm -f /etc/salt/minion_id")

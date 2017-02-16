@@ -31,6 +31,8 @@ from fabric.api import prompt
 from fabric.contrib.files import exists
 from fabric.colors import red, green, blue, yellow
 from fabric.contrib.console import confirm
+from fabric.context_managers import quiet
+from fabric.api import env
 
 
 class AnsibleDeployment(base.BaseDeployment):
@@ -57,10 +59,10 @@ class AnsibleDeployment(base.BaseDeployment):
         with open(main_filename, "r") as main_file:
             main_data = yaml.load(main_file)
         # Indicate active version in our main file and save it back.
-        current_version = main_data[self.KEY_VERSION_FILE]
+        current_version = main_data[self.key_version_file]
         if not current_version:
             raise RuntimeError("Invalid data for yaml file: %s" % main_data)
-        main_data[self.KEY_VERSION_FILE] = git_release_branch
+        main_data[self.key_version_file] = git_release_tag
         with open(main_filename, "w") as main_file:
             yaml.dump(main_data, default_flow_style=False, stream=main_file)
     
@@ -81,13 +83,16 @@ class AnsibleDeployment(base.BaseDeployment):
     def _configure_provising(self,  git_release_tag):
         """ Setup /srv/ directory on the target machine """
         try:
-            with cd(self.local_dir):
+            with cd(os.path.join(self.local_dir, '..')):
                 local("ansible-playbook  --limit='%s' "
                       "--inventory-file=%s "
                       "--sudo -vvv %s "
-                      "--list-hosts" % (self.ansible_host,
-                                        self.ansible_site,
-                                        env.host_string))
+                      "--list-hosts" % (env.host_string,
+                                        os.path.join(self.local_dir,
+                                                     self.ansible_inventory_file),
+                                        os.path.join(self.local_dir,
+                                                     self.ansible_site),
+                                        ))
         except:
             print red("ANSIBLE ERROR: please fix that (Please see bellow)")
             message = ("Execution aborted. Have you define "
@@ -95,22 +100,41 @@ class AnsibleDeployment(base.BaseDeployment):
                        "If no please configure it !") % env.host_string
             print red(message)
             abort(message)
-        
+
+    def _add_ansible_user(self):
+        """ create ansible user """
+        with quiet():
+            sudo("useradd ansible -m  -s /bin/bash")
+            sudo("echo 'ansible ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers")
+        with quiet():
+            sudo("mkdir /home/ansible/.ssh/", user="ansible")
+            put(os.path.join(self.local_dir,self.authorized_key), '/home/ansible/.ssh/authorized_keys2',
+                mode=0600,
+                use_sudo=True)
+        local("chmod 600 %s" % os.path.join(self.local_dir, self.ssh_key))
+        sudo("chown ansible /home/ansible/.ssh/authorized_keys2")
+
+    def bootstrap(self):
+        """ bootstrap project """
+        self._bootstrap_fqdn()
+        self._bootstrap_ubuntu_essential()
+        self._add_ansible_user()
             
-        
-        
     def _hot_fix_provisioning(self):
         """ call provising on sources """
-        pass
+        return self._provisioning()
 
     def _provisioning(self):
         """ run provisioning """
-        
-        local("ansible-playbook --limit='%s'  "
-              "--inventory-file=%s "
-              "--sudo -vvv %s  "
-              "--private-key=%s -u ansible -c paramiko" % (env.host_string,
-                                                           self.ansible_inventory_file,
-                                                           self.ansible_site,
-                                                           self.ssh_key))
+        with cd(os.path.join(self.local_dir, '..')):
+            local("ansible-playbook --limit='%s'  "
+                  "--inventory-file=%s "
+                  "--sudo -vvv %s  "
+                  "--private-key=%s -u ansible -c paramiko" % (env.host_string,
+                                                               os.path.join(self.local_dir,
+                                                                            self.ansible_inventory_file),
+                                                               os.path.join(self.local_dir,
+                                                                            self.ansible_site),
+                                                               os.path.join(self.local_dir,
+                                                                            self.ssh_key)))
 

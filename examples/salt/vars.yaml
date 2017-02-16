@@ -24,6 +24,8 @@ VERSION_FILE: "../provision/pillar/myproject/init.sls"
 VERSION_KEY: 'project/deployed_branch'
 # location of remote salt 
 REMOTE_MINION_TARGET: "/srv/"
+# user of app
+USER: myproject_user
 # what we install for bootstrap
 GENERIC_BOOTSTRAP:
   apt:
