@@ -24,8 +24,8 @@
 	
   4. Configure variable for your project
 
-       * For salt deployment you can take example in  examples/salt/vars.yaml
-       * For ansible deployment copy and paste configuration variable localize in examples/ansible/vars.yaml
+       * For salt deployment you can take example in https://github.com/numericube/numericube.deploy/blob/master/examples/ansible/__init__.py
+       * For ansible deployment copy and paste configuration variable localize in https://github.com/numericube/numericube.deploy/blob/master/examples/ansible/vars.yaml
 
 ## What provide numericube.deploy ?
 
