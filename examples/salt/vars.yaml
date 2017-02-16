@@ -1,9 +1,13 @@
 # where your repository is 
-GIT_REPOSITORY: "git@github.com:organization/project.git"
-# location of configuration for ssh (configure deploy key of github)
-SSH_CONFIG: "../provision/salt/myproject/:opt:myproject:.ssh:config"
+GIT_REPOSITORY: "git@github.com-myproject:organization/project.git"
 # location of private key for deployment (issue from deploy key of github)
 SSH_KEY: "../provision/salt/myproject/:opt:myproject:.ssh:myproject_rsa"
+# location of configuration for ssh (configure deploy key of github)
+# Example of this file
+# Host github.com-myproject
+#   HostName github.com
+#   IdentityFile ~/.ssh/myproject_rsa
+SSH_CONFIG: "../provision/salt/myproject/:opt:myproject:.ssh:config"
 # debug 
 DEBUG: False
 # where we store token from git
