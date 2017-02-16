@@ -35,7 +35,8 @@ numericube.deploy give some usefull function for deploying your project with fab
  
 ## Can I extends numericube.deploy ?
  
- Yes ! add simply a new method in your class (example a custom bootstrap method for your project)
+ Yes ! It is design for this
+ add simply a new method in your class (example a custom bootstrap method for your project)
  You can override method if you want.
  
  
