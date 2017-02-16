@@ -14,12 +14,12 @@ Provide generic base class for deploying application with fabric.
 2. Create and edit __init__.py file in fabfile 
 	   
        * For salt deployment copy and paste code localize in examples/salt/__init__.py
-       * For ansible deployment copy and paste code localize in examples/ansible/__init__.py
+       * For ansible deployment copy and paste configuration variable localize in examples/ansible/__init__.py
 	
 3. Configure variable for your project
 
        * For salt deployment you can take example in  examples/salt/vars.yaml
-       * For ansible deployment copy and paste code localize in examples/ansible/vars.yaml
+       * For ansible deployment copy and paste configuration variable localize in examples/ansible/vars.yaml
 
 ## What provide numericube.deploy ?
 
