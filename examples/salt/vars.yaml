@@ -1,0 +1,27 @@
+# where your repository is 
+GIT_REPOSITORY: "git@github.com:organization/project.git"
+# location of configuration for ssh (configure deploy key of github)
+SSH_CONFIG: "../provision/salt/myproject/:opt:myproject:.ssh:config"
+# location of private key for deployment (issue from deploy key of github)
+SSH_KEY: "../provision/salt/myproject/:opt:myproject:.ssh:myproject_rsa"
+# debug 
+DEBUG: False
+# where we store token from git
+CREDENTIALS_FILE: ".git_token"
+# project name
+PROJECT_NAME: "monespace"
+# where the project is installed in remote dir
+PROJECT_REMOTE_DIR: "/opt/monespace/src"
+# where your version is store
+VERSION_FILE: "../provision/pillar/monespace/init.sls"
+# version key (in relation of your version file
+VERSION_KEY: 'project/deployed_branch'
+# location of remote salt 
+REMOTE_MINION_TARGET: "/srv/"
+# what we install for bootstrap
+GENERIC_BOOTSTRAP:
+  apt:
+    - software-properties-common
+    - python-software-properties
+    - git
+    - curl
