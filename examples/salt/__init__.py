@@ -17,7 +17,7 @@ class MySaltDeployment(SaltDeployment):
         # each of them become an attribute of instance
         # for exemple if you define MY_VARIABLE in your config file
         # you can use self.my_variable in your instance
-        return super(MySaltDeployment, self)\
+        super(MySaltDeployment, self)\
             .__init__(HERE,
                       os.path.join(HERE,'vars.yaml'))
         
