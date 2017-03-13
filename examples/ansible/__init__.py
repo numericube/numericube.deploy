@@ -11,12 +11,12 @@ from fabric.api import sudo
 HERE = os.path.join(os.path.dirname(__file__))
 
 class ProjectDeployment(AnsibleDeployment):
-    """ specific task for monespace """
+    """ specific task for Ansible deployment """
 
     def __init__(self):
-        return super(AnsibleDeployment, self)\
-            .__init__(HERE,
-                      os.path.join(HERE,'vars.yaml'))
+        super(ProjectDeployment, self).__init__(
+            HERE,
+            os.path.join(HERE,'vars.yaml'))
 
     
 deploy = ProjectDeployment()
