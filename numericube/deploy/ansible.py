@@ -63,7 +63,7 @@ class AnsibleDeployment(base.BaseDeployment):
             yaml.dump(main_data, default_flow_style=False, stream=main_file)
     
         # Same for setup.py file, we update the __version__ variable
-        setup_filename = os.path.join(src_dir, "src", "setup.py")
+        setup_filename = self._find_setup_filename(src_dir)
         lines = []
         with open(setup_filename) as infile:
             for line in infile:
@@ -75,6 +75,15 @@ class AnsibleDeployment(base.BaseDeployment):
                 outfile.write(line)
         to_commit = local("git status -s", capture=True)
         return to_commit
+
+    def _find_setup_filename(self, src_dir):
+        """ return setup.py for project """ 
+        if os.path.exists(os.path.join(src_dir, "src", 'setup.py')):
+            return os.path.join(src_dir, "src", 'setup.py')
+        elif os.path.exists(os.path.join(src_dir, 'setup.py')):
+            return os.path.join(src_dir, 'setup.py')
+        else:
+            RuntimeError("ABORT Can't find a valid setup.py is %s" % src_dir)
 
     def _configure_provising(self,  git_release_tag):
         """ Setup /srv/ directory on the target machine """
