@@ -216,6 +216,7 @@ class BaseDeployment(object):
     def test(self):
         """Perform a Make test on the vagrant machine with current branch.
         """
+        self._bootstrap_fqdn()
         print green("ok %s" % env.host_string)
 
     def _create_release_number(self, git_branch=None):
@@ -685,7 +686,17 @@ class BaseDeployment(object):
                          "http://%s by %s") % (git_release_tag,
                                                env.host_string,
                                                getuser())
-        issue_label = env.host_string.split('.')[0]
+        try:
+            issue_label = env.host_string.split('.')[0]
+        except:
+            print red('You must provide a valid host ! -H parameter')
+            abort('host is empty')
+        if git_previous_tag is None or git_release_tag is None:
+            print red('You must provide a  git_previous_tag and '
+                      'a  git_release_tag ')
+            print yellow("Usage: fab -H host update_isssues:"
+                         "git_previous_tag=<>,git_previous_tag=<>")
+            abort('Invalid parameters')
         # Retreive diff
         with settings(warn_only=True):
             avail_diff = local(
