@@ -60,9 +60,9 @@ class SaltDeployment(base.BaseDeployment):
         if not current_version:
             raise RuntimeError("Invalid data for "
                                "yaml file: %s" % pillar_filename)
-        pillar['project']['deployed_branch'] = git_release_tag
+        pillar['project']['deployed_branch'] = str(git_release_tag)
         with open(pillar_filename, "w") as pillar_file:
-            yaml.dump(pillar, default_flow_style=False, stream=pillar_file)
+            yaml.safe_dump(pillar, default_flow_style=False, stream=pillar_file)
 
         # Same for setup.py file, we update the __version__ variable
         setup_filename = os.path.join(src_dir, "setup.py")
