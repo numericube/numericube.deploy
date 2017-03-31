@@ -6,10 +6,11 @@
 
  `git clone git@github.com:numericube/numericube.deploy.git`
  
- `cd numericube.deploy`
+ `pip install -r ./numericube.deploy/requirements.txt`
  
- `python setup.py install`
-
+ `pip install ./numericube.deploy`
+ 
+ 
 ## Configure your project for numericube.deploy
 
   1. Create deploy key in your git repository
