@@ -25,13 +25,6 @@ setup(name='numericube.deploy',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
-          'fabric',
-          'github3.py',
-          'pyyaml',
-          'six',
-          'packaging',
-          'begins',
-          'boto',
       ],
       entry_points="""
       # -*- Entry points: -*-
