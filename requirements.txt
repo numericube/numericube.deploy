@@ -1,0 +1,7 @@
+fabric
+github3.py
+pyyaml
+six
+packaging
+begins
+boto
