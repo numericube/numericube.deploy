@@ -321,7 +321,7 @@ class BaseDeployment(object):
         # Check against remainging PDBs
         with lcd(src_path):
             with quiet():
-                result = local(r"""egrep -RI "^[^#]*set_trace" *""",
+                result = local(r"""egrep --exclude-dir "site-packages" -A2 -B2 -RIn "^[^#]*set_trace" *""",
                                capture=True)
                 print ("(you can safely ignore if the 'egrep' "
                        "command itelf returns an error)")
@@ -755,6 +755,7 @@ class BaseDeployment(object):
         note_url = 'http://numericube.com'
         scopes = ['user', 'repo']
         try:
+            
             auth = authorize(user, password, scopes, note, note_url,
                              two_factor_callback=my_two_factor_function)
             with open(os.path.join(self.local_dir,
