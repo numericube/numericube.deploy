@@ -143,10 +143,18 @@ class SaltDeployment(base.BaseDeployment):
         for pid in re.findall(".*[pid ]([0-9]+),", master_pids):
             sudo("kill -HUP %s" % pid)
 
-
     def _provisioning(self):
         """ run provisioning """
-        sudo("salt-call --local state.highstate")
+        salt_return = sudo("salt-call --local state.highstate")
+        pattern = re.compile(r'Failed:.*(\d+)')
+        if pattern.search(salt_return):
+            failed = int(pattern.search(salt_return).groups()[0])
+            if failed != 0:
+                print red('There is %d failed states  , abort', failed)
+                abort("There is a problem in deploy")
+        else:
+            print red('No summary returned by salt, problem with salt, abort')
+            abort("There is a problem in deploy")
 
     def bootstrap(self):
         """ bootstrap project """

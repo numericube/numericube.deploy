@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0'
+version = '1.2'
 
 setup(name='numericube.deploy',
       version=version,
@@ -30,9 +30,12 @@ setup(name='numericube.deploy',
           'pyyaml',
           'six',
           'packaging',
-          
+          'begins',
+          'boto',
       ],
       entry_points="""
       # -*- Entry points: -*-
+      [console_scripts]
+      create_instance = numericube.deploy.bin.ec2:create_instance.start
       """,
       )
