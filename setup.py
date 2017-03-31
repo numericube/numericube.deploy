@@ -30,9 +30,12 @@ setup(name='numericube.deploy',
           'pyyaml',
           'six',
           'packaging',
-          
+          'begins',
+          'boto',
       ],
       entry_points="""
       # -*- Entry points: -*-
+      [console_scripts]
+      create_instance = numericube.deploy.bin.ec2:create_instance.start
       """,
       )
