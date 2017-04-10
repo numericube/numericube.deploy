@@ -18,7 +18,7 @@
 
 ## Use
 
-Numericube.deploy provides some usefull fabric method for deploying git projet based on remote host
+Numericube.deploy provides some usefull fabric method for deploying git project based on remote host
 
 * fab -H \<host\> deploy
     
