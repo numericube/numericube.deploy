@@ -41,19 +41,19 @@ Numericube.deploy provides some usefull fabric method for deploying git projet b
    
 3. fab -H \<host\> update_issues:git_previous_tag=\<previous_tag\>,git_release_tag=\<release_tag\>
 
-  * Update git issue on tagging them by \<host\> to say that issue is deployed on \<host\>
+   * Update git issue on tagging them by \<host\> to say that issue is deployed on \<host\>
   
 4. fab latest_release
 
-  * Return the latest release in your branch
+   * Return the latest release in your branch
   
 5. fab -H \<host\> test
 
-  * Test if remote machine is ready for deploy
+   * Test if remote machine is ready for deploy
   
 6. fab get_git_token
 
-  * tool for generate a git token that used for updating your git issues.
+   * tool for generate a git token that used for updating your git issues.
 
 
 ## Configure your project for numericube.deploy
