@@ -60,6 +60,30 @@ COMMAND_CURRENT_BRANCH = r"git branch | grep '*' | sed -e 's/\* //g'"
 COMMAND_CURRENT_TAG = r"git describe --exact-match --tags"
 
 
+def _uni(thing):
+    """ helper method for transform string in unicode
+    :param thing: [required] string or unicode
+    :type thing: string or unicode
+    :returns: unicode object
+    :rtype: unicode or object if st is not an string or an unicode
+    :raises: Exception is st is not unicode or str
+    """
+    if type(thing) is unicode:
+        return thing
+    elif type(thing) is str:
+        try:
+            return unicode(thing, 'utf-8', 'xmlcharrefreplace')
+        except UnicodeDecodeError:
+            logger.exception('We cant transform to unicode')
+            return unicode(thing, 'utf-8', 'replace')
+    else:
+        try:
+            thing = unicode(thing, 'utf-8')
+        except UnicodeDecodeError:
+            logger.exception('We cant transform to unicode')
+    return thing
+
+
 def create_release_number(git_branch=None):
     """Return release number according to date/time.
     If force_new is True, then we must provide a brand new and empty version #
@@ -276,6 +300,7 @@ class BaseDeployment(object):
                 current_branch = self.current_branch
                 output = local("git branch -av --list *%s" % current_branch,
                                capture=True)
+                output = _uni(output)
                 lines = output.split("\n")
                 # remove release branch
                 local_remote = []
@@ -655,7 +680,8 @@ class BaseDeployment(object):
 
         # And now, ladies and gentlemen,
         # update issues about what we've just done!
-        self.update_issues(current_tag, git_release_tag)
+        if current_tag:
+            self.update_issues(current_tag, git_release_tag)
 
     def _configure_provising(self, git_release_tag):
         """ task for deploying on platform """
@@ -695,7 +721,7 @@ class BaseDeployment(object):
             print red('You must provide a  git_previous_tag and '
                       'a  git_release_tag ')
             print yellow("Usage: fab -H host update_isssues:"
-                         "git_previous_tag=<>,git_previous_tag=<>")
+                         "git_previous_tag=<>,git_release_tag=<>")
             abort('Invalid parameters')
         if confirm("Do you want to update git tracker about this release ?",
                    default=True) is False:
@@ -721,9 +747,9 @@ class BaseDeployment(object):
                 issue = github.issue(root, project_name, issue_id)
                 if not issue:
                     continue
-
+                
                 # Update issue with comment and label
-                if issue_label not in [line.name for line in issue.labels]:
+                if issue_label not in [label.name for label in issue.labels]:
                     print green("   Deployed:"), line[41:]
                     issue.create_comment(issue_comment)
                     issue.add_labels(issue_label)
@@ -755,7 +781,6 @@ class BaseDeployment(object):
         note_url = 'http://numericube.com'
         scopes = ['user', 'repo']
         try:
-            
             auth = authorize(user, password, scopes, note, note_url,
                              two_factor_callback=my_two_factor_function)
             with open(os.path.join(self.local_dir,

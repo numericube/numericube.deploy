@@ -9,10 +9,12 @@ import boto.ec2
 import base64
 import argparse
 import begin
+import os
 
 __author__ = 'yboussard'
 __docformat__ = 'restructuredtext'
 
+HERE = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 class EC2(object):
     """ helper class for create a new instance """
@@ -34,14 +36,15 @@ class EC2(object):
                        'Mem': '1.7',
                        'Cost': '0.165'}]
 
-    ami = "ami-f2191786"
+    ami = "ami-2d1a254b"
     key_name = "piper"
     security_groups = ['quick-start-1']
 
-    def __init__(self, aws_access_key_id, aws_secret_access_key):
+    def __init__(self, aws_access_key_id, aws_secret_access_key, ssh_public_key):
         """ constructor """
         self.aws_access_key_id = aws_access_key_id
         self.aws_secret_access_key = aws_secret_access_key
+        self.ssh_public_key = ssh_public_key
         self.instance_type = 't1.micro'
         self.instance_name = 'selfpass'
         self.instance_shutdown_behavior = 'stop'
@@ -76,6 +79,20 @@ class EC2(object):
         if self.instance_shutdown_behavior:
             self.instance_shutdown_behavior = 'stop'
 
+    @property
+    def user_data(self):
+        """ generate a user data for create a
+        specific deploy for instance """
+        with open(self.ssh_public_key, 'r') as fd_ssh:
+            public_key = fd_ssh.read()
+        env = {'user': os.environ['USER'],
+               'public_key': public_key,
+               'name': self.instance_name}
+        with open(os.path.join(HERE, "bin", "bootstrap.sh")) as install_script:
+            data = install_script.read()
+        data = data.format(**env)
+        return data
+
     def create_instance(self):
         """ create a new instance """
         # No more bootstrap, this done by numericube.deploy """
@@ -94,6 +111,7 @@ class EC2(object):
             self.ami,
             key_name=self.key_name,
             instance_type=self.instance_type,
+            user_data = self.user_data,
             security_groups=self.security_groups,
             instance_initiated_shutdown_behavior=self.instance_shutdown_behavior
         )
@@ -118,7 +136,12 @@ class EC2(object):
 
 
 @begin.start
-def create_instance(aws_access_key_id, aws_secret_access_key):
-    """ create a new instances """
-    ec2 = EC2(aws_access_key_id, aws_secret_access_key)
+def create_instance(aws_access_key_id, aws_secret_access_key, ssh_public_key):
+    """ create a new instances 
+    :param aws_access_key_id: [required] ec2 aws_access_key_id
+    :param aws_secret_access_key: [required] ec2 aws_secret_access_key
+    :param ssh_public_key: [required] path to your ssh public key 
+                            ie $HOME/.ssh/id_rsa.pub 
+    """
+    ec2 = EC2(aws_access_key_id, aws_secret_access_key, ssh_public_key)
     ec2.create_instance()
