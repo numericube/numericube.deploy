@@ -59,10 +59,13 @@ Numericube.deploy provides some usefull fabric method for deploying git project 
 ## Configure your project for numericube.deploy
 
   1. [Create deploy key in your git repository](https://developer.github.com/guides/managing-deploy-keys/#deploy-keys)
+      
       We use this for deploying your application in remote host
 
   2. Generate a config file with generate_config utility
+     
      `$ cd \<project_directory\>` 
+     
      `$ generate_config` 
 
      And answers to questions
