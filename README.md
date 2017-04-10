@@ -20,14 +20,14 @@
 
 Numericube.deploy provides some usefull fabric method for deploying git projet based on remote host
 
-1. fab -H \<host\> deploy
+* fab -H \<host\> deploy
     
     * Check if your project is deployable (ie, no pdb, everything is pushed on git)
     
     * Create a new tag base on your branch. New tag looks like vYYYYMMDD[a-z]_\<name_of_your_branch\>
     
     
-2. fab -H \<host\> release
+* fab -H \<host\> release
 
    * Get the remote tag deployed on remote host
    
@@ -39,19 +39,19 @@ Numericube.deploy provides some usefull fabric method for deploying git projet b
    
    * If everthing is ok, update git issue according to your git log.
    
-3. fab -H \<host\> update_issues:git_previous_tag=\<previous_tag\>,git_release_tag=\<release_tag\>
+* fab -H \<host\> update_issues:git_previous_tag=\<previous_tag\>,git_release_tag=\<release_tag\>
 
    * Update git issue on tagging them by \<host\> to say that issue is deployed on \<host\>
   
-4. fab latest_release
+* fab latest_release
 
    * Return the latest release in your branch
   
-5. fab -H \<host\> test
+* fab -H \<host\> test
 
    * Test if remote machine is ready for deploy
   
-6. fab get_git_token
+* fab get_git_token
 
    * tool for generate a git token that used for updating your git issues.
 
