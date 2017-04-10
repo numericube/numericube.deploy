@@ -2,7 +2,7 @@
 
    Provide generic base class for deploying application (based on salt or ansible) with fabric.
 
-## Installation
+## Install
 
  `git clone git@github.com:numericube/numericube.deploy.git`
  
@@ -10,40 +10,63 @@
  
  `pip install ./numericube.deploy`
  
- 
+## Update
+
+`git pull`
+
+`pip install ./numericube.deploy`
+
+## Use
+
+Numericube.deploy provides some usefull fabric method for deploying git projet based on remote host
+
+1. fab -H <host> deploy
+    
+    * Check if your project is deployable (ie, no pdb, everything is pushed on git)
+    
+    * Create a new tag base on your branch. New tag looks like vYYYYMMDD[a-z]_<name_ofyour_branch>
+    
+    
+2. fab -H <host> release
+
+   * Get the remote tag deploy on remote host
+   
+   * If no tag -> bootstrap your remote machine for receive your app 
+   
+   * Else give you a review about previous version installed on remote host
+   
+   * Call your provisionner on remote host (salt or ansible) and deploy your app
+   
+   * If everthing is ok, update git issue according to your git log.
+   
+3. fab -H <host> update_issues:git_previous_tag=<previous_tag>,git_release_tag=<release_tag>
+
+  * Update git issue on tagging them by <host> to say that issue is deployed on <host>
+  
+4. fab latest_release
+
+  * Return the latest release make on youy branch
+  
+5. fab -H <host> test
+
+  * Test if remote machine is ok for deploy
+  
+6. fab get_git_token
+
+  * tool for generate a git token that used for updating your git issues.
+
+
 ## Configure your project for numericube.deploy
 
-  1. Create deploy key in your git repository
-  
-    For more information see : https://developer.github.com/guides/managing-deploy-keys/#deploy-keys
-  
-    We use this for deploying your application in remote host
+  1. [Create deploy key in your git repository](https://developer.github.com/guides/managing-deploy-keys/#deploy-keys)
+      We use this for deploying your application in remote host
 
-  2. Create a fabfile directory in your repository
-	`mkdir fabfile`
+  2. Generate a config file with generate_config utility
+     `$ cd <project_directory>` 
+     `$ generate_config` 
 
-  3. Create and edit __init__.py file in fabfile 
-	   
-       * For salt deployment copy and paste code localize in https://github.com/numericube/numericube.deploy/blob/master/examples/salt/__init__.py
-       * For ansible deployment copy and paste configuration variable localize in https://github.com/numericube/numericube.deploy/blob/master/examples/ansible/__init__.py
-	
-  4. Configure variable for your project
+     And answers to questions
 
-       * For salt deployment you can take example in https://github.com/numericube/numericube.deploy/blob/master/examples/salt/vars.yaml
-       * For ansible deployment copy and paste configuration variable localize in https://github.com/numericube/numericube.deploy/blob/master/examples/ansible/vars.yaml
-
-## What provide numericube.deploy ?
-
-numericube.deploy give some usefull function for deploying your project with fabric
-
-    deploy          Perform a full LOCAL deploy on the given host.
-    get_git_token   Prompt for git token and save it in ~/.fab_token.git
-    help            print help
-    latest_release  Return latest known release #
-    release         Creates the release tag.
-    test            Perform a Make test on the vagrant machine with current b...
-    update_issues   Update issues according to what we're doing now.
- 
 ## Can I extends numericube.deploy ?
  
  Yes ! It is design for this
@@ -51,6 +74,3 @@ numericube.deploy give some usefull function for deploying your project with fab
  Add simply a new method in your class (example a custom bootstrap method for your project)
  
  You can override method if you want.
- 
- 
- 

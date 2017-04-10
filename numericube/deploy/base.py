@@ -747,7 +747,6 @@ class BaseDeployment(object):
                 issue = github.issue(root, project_name, issue_id)
                 if not issue:
                     continue
-                
                 # Update issue with comment and label
                 if issue_label not in [label.name for label in issue.labels]:
                     print green("   Deployed:"), line[41:]

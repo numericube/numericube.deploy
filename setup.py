@@ -30,5 +30,6 @@ setup(name='numericube.deploy',
       # -*- Entry points: -*-
       [console_scripts]
       create_instance = numericube.deploy.bin.ec2:create_instance.start
+      generate_config = numericube.deploy.bin.generate:generator
       """,
       )
