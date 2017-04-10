@@ -29,11 +29,11 @@ Numericube.deploy provides some usefull fabric method for deploying git projet b
     
 2. fab -H <host> release
 
-   * Get the remote tag deploy on remote host
+   * Get the remote tag deployed on remote host
    
-   * If no tag -> bootstrap your remote machine for receive your app 
+   * If no tag -> bootstrap your remote machine (see config for default pkg to be installed)
    
-   * Else give you a review about previous version installed on remote host
+   * Else give you a review about previous versions installed on remote host
    
    * Call your provisionner on remote host (salt or ansible) and deploy your app
    
@@ -45,11 +45,11 @@ Numericube.deploy provides some usefull fabric method for deploying git projet b
   
 4. fab latest_release
 
-  * Return the latest release make on youy branch
+  * Return the latest release in your branch
   
 5. fab -H <host> test
 
-  * Test if remote machine is ok for deploy
+  * Test if remote machine is ready for deploy
   
 6. fab get_git_token
 
