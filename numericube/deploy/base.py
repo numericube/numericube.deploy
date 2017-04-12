@@ -198,6 +198,7 @@ class BaseDeployment(object):
         """
         # Get current branch
         with cd(self.local_dir):
+            
             current_branch = self.current_branch
             if current_branch == 'master':
                 branch_ext = ""
@@ -207,7 +208,7 @@ class BaseDeployment(object):
             # Fetch branches (locally, and sorted)
             local("git fetch", capture=True)
             cmd = (r"git tag --sort version:refname|"
-                   r"grep 'v[0-9]\{8\}[a-z]\?%s'")
+                   r"grep 'v[0-9]\{8\}[a-z]\?%s$'")
             with quiet():
                 tags = local(cmd % branch_ext, capture=True)
             if tags.failed:
