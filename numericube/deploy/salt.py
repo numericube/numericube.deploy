@@ -135,14 +135,6 @@ class SaltDeployment(base.BaseDeployment):
                     print red(msg)
                     abort(msg)
 
-    def _hot_fix_provisioning(self):
-        """ call provising on sources """
-        sudo("salt-call --local state.sls monespace.sources")
-        # Hotfix mode? Gracefully restart master PIDs
-        master_pids = sudo("supervisorctl status")
-        for pid in re.findall(".*[pid ]([0-9]+),", master_pids):
-            sudo("kill -HUP %s" % pid)
-
     def _provisioning(self):
         """ run provisioning """
         salt_return = sudo("salt-call --local state.highstate")

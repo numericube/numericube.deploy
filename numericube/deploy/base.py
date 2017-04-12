@@ -131,6 +131,8 @@ class BaseDeployment(object):
     credentials_file = None
     common_ancestor_tag = None
     project_name = None
+    # flag to tell that hotfix must be show in deploy
+    have_hotfix = False
     # if you want add variable add to this
 
     def __init__(self, local_dir, yaml_config_file):
@@ -572,9 +574,14 @@ class BaseDeployment(object):
                         )
                     )
             if from_deploy:
-                answer = prompt("Type a commit hash to perform a diff,"
-                                "'no' to abort, 'yes' to deploy or "
-                                "'hotfix' to perform a hotfix:").strip()
+                # fix #11 - add flag
+                if self.have_hotfix is True:
+                    answer = prompt("Type a commit hash to perform a diff,"
+                                    "'no' to abort, 'yes' to deploy or "
+                                    "'hotfix' to perform a hotfix:").strip()
+                else:
+                    answer = prompt("Type a commit hash to perform a diff,"
+                                    "'no' to abort, 'yes' to deploy")
             else:
                 answer = prompt("Type a commit hash to perform "
                                 "a diff or 'yes' to stop:").strip()
@@ -691,7 +698,8 @@ class BaseDeployment(object):
     def _hot_fix_provisioning(self):
         """ run hot fix command """
         raise NotImplementedError("You must implement _hot_fix_provisioning "
-                                  "in subclass")
+                                  "in subclass and set self.have_hotfix "
+                                  "to True")
 
     def _provisioning(self):
         """ run deploy command """

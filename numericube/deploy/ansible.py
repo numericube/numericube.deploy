@@ -124,10 +124,6 @@ class AnsibleDeployment(base.BaseDeployment):
         self._bootstrap_fqdn()
         self._bootstrap_ubuntu_essential()
         self._add_ansible_user()
-            
-    def _hot_fix_provisioning(self):
-        """ call provising on sources """
-        return self._provisioning()
 
     def _provisioning(self):
         """ run provisioning """
@@ -142,4 +138,3 @@ class AnsibleDeployment(base.BaseDeployment):
                                                                             self.ansible_site),
                                                                os.path.join(self.local_dir,
                                                                             self.ssh_key)))
-
