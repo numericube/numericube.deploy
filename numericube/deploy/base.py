@@ -528,6 +528,18 @@ class BaseDeployment(object):
         # Return it
         return current_tag
 
+    def diff(self):
+        """Perform a big 'git diff' between current branch and target host
+        """
+        current_tag_remote = self._get_remote_current_tag()
+        print yellow("Current branch on local host:"),
+        print green(self.current_branch)
+        print yellow("Current tag on remote host:"),
+        print green(current_tag_remote)
+        self._review_diffs(current_tag_remote,
+                           self.current_branch,
+                           from_deploy=False)
+
     def _review_diffs(self, current_tag, git_release_tag, from_deploy=True):
         """A helper method to give a prompt and review diffs or confirm/abort.
         Will diff commit hashes or refuse executing.
