@@ -729,7 +729,7 @@ class BaseDeployment(object):
         """Update issues according to what we're doing now.
         """
         # Prepare text to put in the issues
-        issue_comment = ("Tag %s deployed on"
+        issue_comment = ("Tag %s deployed on "
                          "http://%s by %s") % (git_release_tag,
                                                env.host_string,
                                                getuser())
