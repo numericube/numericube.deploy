@@ -9,14 +9,15 @@ apt-get upgrade -y
 adduser --disabled-password --gecos ""  {user}
 adduser {user} sudo
 mkdir /home/{user}/.ssh
-echo "{public_key}" >> /home/{user}/.ssh/authorized_keys2
+chmod 700 /home/{user}/.ssh
+echo "{public_key}" >> /home/{user}/.ssh/authorized_keys
 chown -R {user}:{user} /home/{user}/.ssh
-chmod 600 /home/{user}/.ssh/authorized_keys2
+chmod 600 /home/{user}/.ssh/authorized_keys
 
 # fix hostname
 apt-get install curl
 HOSTNAME=`curl http://169.254.169.254/latest/meta-data/public-hostname`
-sed -i "1i127.0.1.1 $HOSTNAME" /etc/hosts
+sed -i "127.0.1.1 $HOSTNAME" /etc/hosts
 echo "$HOSTNAME" > /etc/hostname
 hostname "$HOSTNAME"
 

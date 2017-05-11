@@ -138,11 +138,11 @@ class SaltDeployment(base.BaseDeployment):
     def _provisioning(self):
         """ run provisioning """
         salt_return = sudo("salt-call --local state.highstate")
-        pattern = re.compile(r'Failed:.*(\d+)')
+        pattern = re.compile(r'Failed:\s+(\d+)')
         if pattern.search(salt_return):
             failed = int(pattern.search(salt_return).groups()[0])
-            if failed != 0:
-                print red('There is %d failed states  , abort', failed)
+            if self.debug is False and failed != 0:
+                print red('There is %d failed states  , abort' % failed)
                 abort("There is a problem in deploy")
         else:
             print red('No summary returned by salt, problem with salt, abort')

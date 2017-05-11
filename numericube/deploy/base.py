@@ -732,10 +732,7 @@ class BaseDeployment(object):
             print yellow("Usage: fab -H host update_isssues:"
                          "git_previous_tag=<>,git_release_tag=<>")
             abort('Invalid parameters')
-        if confirm("Do you want to update git tracker about this release ?",
-                   default=True) is False:
-            print blue('*** end ***')
-            return
+
         # Retreive diff
         with settings(warn_only=True):
             avail_diff = local(
